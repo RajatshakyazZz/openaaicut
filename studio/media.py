@@ -96,11 +96,15 @@ class _Quiet:
 
 
 def _ydl(opts):
+    import shutil
     import yt_dlp
-    # a channel or playlist link is answered as "a list" straight away, never walked video by video
-    return yt_dlp.YoutubeDL({"noplaylist": True, "quiet": True, "no_warnings": True, "logger": _Quiet(),
-                             "extract_flat": "in_playlist", "playlistend": 1, "socket_timeout": 20,
-                             "concurrent_fragment_downloads": 4, **opts})
+    base = {"noplaylist": True, "quiet": True, "no_warnings": True, "logger": _Quiet(),
+            "extract_flat": "in_playlist", "playlistend": 1, "socket_timeout": 20,
+            "concurrent_fragment_downloads": 4}
+    node = shutil.which("node")
+    if node:
+        base["js_runtimes"] = {"node": {"path": node}}
+    return yt_dlp.YoutubeDL({**base, **opts})
 
 
 def _video_format(height):
