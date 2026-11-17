@@ -161,9 +161,9 @@ def user_dir(uid: str) -> Path:
 
 
 # ---------------------------------------------------------------- the site
-HOST = env("OPENAICUT_HOST", "127.0.0.1")
-PORT = int(env("OPENAICUT_PORT") or "8765")
-PUBLIC_URL = (env("OPENAICUT_PUBLIC_URL") or f"http://127.0.0.1:{PORT}").rstrip("/")   # e.g. https://openaicut.com
+HOST = env("OPENAICUT_HOST") or env("HOST") or ("0.0.0.0" if env("PORT") else "127.0.0.1")
+PORT = int(env("PORT") or env("OPENAICUT_PORT") or "8765")
+PUBLIC_URL = (env("OPENAICUT_PUBLIC_URL") or (f"https://{env('RAILWAY_PUBLIC_DOMAIN')}" if env("RAILWAY_PUBLIC_DOMAIN") else None) or f"http://127.0.0.1:{PORT}").rstrip("/")   # e.g. https://openaicut.com
 HTTPS = PUBLIC_URL.startswith("https://")
 SESSION_DAYS = int(env("OPENAICUT_SESSION_DAYS", "30"))
 # Accounts are off by default: OpenAICut opens straight into the dashboard, with no sign-in, which is what you want
