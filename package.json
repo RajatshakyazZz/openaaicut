@@ -1,0 +1,10 @@
+{
+  "name": "openaicut",
+  "version": "1.0.0",
+  "description": "Turn long videos and live streams into captioned vertical clips",
+  "scripts": {
+    "dev": "OPENAICUT_AUTO_RELOAD=1 .venv/bin/python -m studio.server",
+    "start": ".venv/bin/python -m studio.server",
+    "test": ".venv/bin/python tests/run.py"
+  }
+}
